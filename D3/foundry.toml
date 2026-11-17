@@ -1,0 +1,9 @@
+[profile.default]
+src = "src"
+out = "out"
+solc_version = "0.8.29"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+allow_paths = ["../github-repo/starter/lib/reactive-lib-omni", "../github-repo/starter/lib/forge-std"]
+remappings = ["@reactive/=../github-repo/starter/lib/reactive-lib-omni/", "forge-std/=../github-repo/starter/lib/forge-std/src/"]

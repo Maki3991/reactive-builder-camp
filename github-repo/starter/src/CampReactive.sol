@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import { IReactive } from "@reactive/src/interfaces/IReactive.sol";
-import { ISystemContract } from "@reactive/src/interfaces/ISystemContract.sol";
-import { AbstractReactive } from "@reactive/src/base/AbstractReactive.sol";
+import {IReactive} from "@reactive/src/interfaces/IReactive.sol";
+import {ISystemContract} from "@reactive/src/interfaces/ISystemContract.sol";
+import {AbstractReactive} from "@reactive/src/base/AbstractReactive.sol";
 
 /// @title CampReactive — 共学模板的 Reactive 侧合约（部署在 Lasna / Reactive 主网）
 /// @notice 订阅「源链某合约的某个事件」，在 react() 里做判断，满足条件就请求目标链回调。
@@ -17,9 +17,18 @@ contract CampReactive is AbstractReactive {
     error ZeroAddress();
 
     /// @notice 每次收到匹配事件时发出，方便在 Reactscan 上看到 react() 真的被调用了
-    event Seen(uint256 indexed originChainId, address indexed originContract, uint256 txHash, uint256 value);
+    event Seen(
+        uint256 indexed originChainId,
+        address indexed originContract,
+        uint256 txHash,
+        uint256 value
+    );
     /// @notice 请求回调时发出
-    event CallbackRequested(uint256 indexed destChainId, address indexed recipient, uint256 value);
+    event CallbackRequested(
+        uint256 indexed destChainId,
+        address indexed recipient,
+        uint256 value
+    );
 
     address public immutable OWNER;
     uint256 public immutable ORIGIN_CHAIN_ID;
@@ -65,7 +74,14 @@ contract CampReactive is AbstractReactive {
         threshold = threshold_;
         remaining = limit_;
 
-        SYSTEM.subscribe(originChainId_, originContract_, originTopic0_, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+        SYSTEM.subscribe(
+            originChainId_,
+            originContract_,
+            originTopic0_,
+            REACTIVE_IGNORE,
+            REACTIVE_IGNORE,
+            REACTIVE_IGNORE
+        );
     }
 
     function setRecipient(address recipient_) external onlyOwner {
@@ -89,7 +105,9 @@ contract CampReactive is AbstractReactive {
         if (remaining == 0) return;
 
         // 示例事件：Ping(address indexed who, uint256 value) → topic1 = who，data = abi.encode(value)
-        uint256 value = log_.data.length >= 32 ? abi.decode(log_.data, (uint256)) : 0;
+        uint256 value = log_.data.length >= 32
+            ? abi.decode(log_.data, (uint256))
+            : 0;
 
         lastTxHash = log_.txHash;
         lastReactBlock = block.number;
@@ -100,12 +118,23 @@ contract CampReactive is AbstractReactive {
 
         remaining -= 1;
         if (remaining == 0) {
-            SYSTEM.unsubscribe(ORIGIN_CHAIN_ID, ORIGIN_CONTRACT, ORIGIN_TOPIC_0, REACTIVE_IGNORE, REACTIVE_IGNORE, REACTIVE_IGNORE);
+            SYSTEM.unsubscribe(
+                ORIGIN_CHAIN_ID,
+                ORIGIN_CONTRACT,
+                ORIGIN_TOPIC_0,
+                REACTIVE_IGNORE,
+                REACTIVE_IGNORE,
+                REACTIVE_IGNORE
+            );
         }
 
         // 第一个参数 address(0) 是占位符，Callback Proxy 会把它替换成本合约地址，供目标链鉴权
         bytes memory payload = abi.encodeWithSignature(
-            "onEvent(address,uint256,uint256,uint256)", address(0), log_.chainId, log_.txHash, value
+            "onEvent(address,uint256,uint256,uint256)",
+            address(0),
+            log_.chainId,
+            log_.txHash,
+            value
         );
         emit CallbackRequested(DEST_CHAIN_ID, recipient, value);
         SYSTEM.requestCallbackV_1_0(

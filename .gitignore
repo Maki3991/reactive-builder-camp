@@ -1,5 +1,11 @@
-starter/.env
-starter/out/
-starter/cache/
-starter/broadcast/
-.DS_Store
+# Local secrets and wallet material
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Foundry-generated build artifacts
+D3/out/
+D3/cache/
+D3/broadcast/

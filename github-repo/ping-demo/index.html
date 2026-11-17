@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Ping Lab — Reactive 测试网实验</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="top"><a class="brand" href="#"><span class="mark">↗</span> PING LAB <span class="brand-sub">/ REACTIVE EXPERIMENT</span></a><span class="network"><i></i> 测试网实验</span></header>
+    <section class="hero"><div><p class="eyebrow">一个跨链事件实验 <span>01 / 03</span></p><h1>发出一个信号。<br><em>看它如何抵达。</em></h1><p class="lead">从 Sepolia 发出 Ping，让 Reactive 判断，再观察回调结果。这次用一个按钮，走完你已经部署的合约流程。</p></div><div class="orbit" aria-hidden="true"><div class="orbit-inner"><span>500</span><small>ONE SIGNAL<br>THREE STEPS</small></div><b class="dot d1"></b><b class="dot d2"></b><b class="dot d3"></b></div></section>
+    <section class="flow" aria-label="跨链流程"><div><span class="step-no">01</span><strong>发出事件</strong><small>Sepolia · CampOrigin</small></div><span class="arrow">→</span><div><span class="step-no">02</span><strong>判断条件</strong><small>Lasna · CampReactive</small></div><span class="arrow">→</span><div><span class="step-no">03</span><strong>记录回调</strong><small>Sepolia · CampCallback</small></div></section>
+    <section class="workspace"><div class="panel action"><div class="section-head"><div><p class="eyebrow">SEND A SIGNAL</p><h2>试一次 Ping</h2></div><span class="badge">SEPOLIA</span></div><p class="muted">连接 MetaMask，输入一个整数。交易需要在钱包中确认，并消耗少量 Sepolia 测试币。</p><div class="wallet"><span id="wallet-status">钱包未连接</span><button id="connect" class="outline" type="button">连接钱包 ↗</button></div><form id="ping-form"><label for="value">输入数字 <span>UINT256</span></label><div class="input-wrap"><input id="value" type="text" inputmode="numeric" value="500" autocomplete="off" required><span>≥ 100 会请求回调</span></div><button id="send" class="primary" type="submit" disabled>发送 Ping <span>↗</span></button></form><p class="footnote">数字是函数参数，不是转账金额。交易仅在 Sepolia 测试网发起。</p></div>
+    <div class="panel result"><div class="section-head"><div><p class="eyebrow">LIVE OBSERVATION</p><h2>查看结果</h2></div><button id="refresh" class="text-button" type="button">刷新 ↻</button></div><div id="status" class="status" role="status" aria-live="polite"><span class="status-dot"></span><div><strong id="status-title">等待连接钱包</strong><p id="status-detail">连接后可以读取回调合约的最新记录。</p></div></div><div class="stats"><div><small>累计回调次数</small><strong id="count">—</strong></div><div><small>最近记录的数字</small><strong id="last-value">—</strong></div></div><p class="context">这里显示合约的<strong>全局最新记录</strong>，可能来自之前的操作。本次交易只有在源交易哈希匹配时才标记为回调成功。</p><a id="tx-link" class="record-link" hidden target="_blank" rel="noopener noreferrer">查看本次 Ping 交易 ↗</a><a class="record-link" target="_blank" rel="noopener noreferrer" href="https://sepolia.etherscan.io/address/0x9f8180Fa77B13dD025b2e81c6F66Fd2ce0390dc5">查看回调合约 ↗</a></div></section>
+    <footer><span>BUILT FOR LEARNING · TESTNET ONLY</span><span>Sepolia → Lasna → Sepolia</span></footer>
+  </main><script src="app.js" defer></script>
+</body></html>

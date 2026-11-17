@@ -1,12 +1,9 @@
-# Reactive Builder Camp
+# Reactive Builder Camp 学习记录
 
-ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29），对接 Reactive Omni Buildathon。
+这里记录我参加 Reactive Builder Camp 的学习笔记和动手练习。
 
-- `starter/` — clone 即用的「事件 → react() → 回调」三步走模板（Foundry），已在 Sepolia ↔ Lasna 实测跑通
-- `docs/cheatsheet.md` — 网络 / 地址 / 费用 / Omni 写法速查表
-- `docs/faq.md` — 学员 FAQ
+- `D3/`：在 Lasna 测试网上监听 Sepolia 事件的 Reactive 合约练习，包含说明和本地测试。
+- `学习课题/`：Web3 基础学习笔记。
+- `github-repo/`：共学营的参考材料、起始项目及相关练习。原项目见 [ETHPanda Reactive Builder Camp](https://github.com/ethpanda-org/reactive-builder-camp)。
 
-报名：https://web3career.build/zh/programs/reactive-builder-camp
-黑客松：https://dorahacks.io/hackathon/reactive-omni-buildathon/detail
-
-本仓库的模板和文档由 AI 辅助编写，经人工审阅与链上实测。
+合约用于学习和测试；运行配置和网络支持可能变化，请以官方最新文档为准。
